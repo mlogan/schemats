@@ -1,3 +1,5 @@
+*Note: This is a fork of the unmaintained project schemats, originally found at: https://github.com/SweetIQ/schemats*
+
 # Schemats
 
 [![npm](https://img.shields.io/npm/v/schemats.svg)](https://www.npmjs.com/package/schemats)
