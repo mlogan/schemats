@@ -1,4 +1,4 @@
-import * as assert from 'power-assert'
+import assert from 'power-assert'
 import { Database, getDatabase } from '../../src/index'
 import { writeTsFile, compare, loadSchema } from '../testUtility'
 
@@ -11,6 +11,7 @@ describe('schemat generation integration testing', () => {
             }
             db = getDatabase(process.env.POSTGRES_URL)
             await loadSchema(db, './test/fixture/postgres/initCleanup.sql')
+            return
         })
 
         it('Basic generation', async () => {
@@ -39,8 +40,9 @@ describe('schemat generation integration testing', () => {
             }
             db = getDatabase(`${process.env.MYSQL_URL}?multipleStatements=true`)
             await loadSchema(db, './test/fixture/mysql/initCleanup.sql')
+            return
         })
-        it ('Basic generation', async () => {
+        it('Basic generation', async () => {
             const inputSQLFile = 'test/fixture/mysql/osm.sql'
             const outputFile = './test/actual/mysql/osm.ts'
             const expectedFile = './test/expected/mysql/osm.ts'

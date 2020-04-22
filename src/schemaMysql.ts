@@ -1,11 +1,11 @@
-import * as mysql from 'mysql'
+import mysql from 'mysql'
 import { mapValues, keys, isEqual } from 'lodash'
 import { parse as urlParse } from 'url'
 import { TableDefinition, Database } from './schemaInterfaces'
 import Options from './options'
 
 export class MysqlDatabase implements Database {
-    private db: mysql.IConnection
+    private db: mysql.Connection
     private defaultSchema: string
 
     constructor (public connectionString: string) {
@@ -111,7 +111,7 @@ export class MysqlDatabase implements Database {
             `WHERE data_type IN ('enum', 'set') ${enumSchemaWhereClause}`,
             params
         )
-        rawEnumRecords.forEach((enumItem: { column_name: string, column_type: string, data_type: string }) => {
+        rawEnumRecords.forEach((enumItem: any) => {
             const enumName = MysqlDatabase.getEnumNameFromColumn(enumItem.data_type, enumItem.column_name)
             const enumValues = MysqlDatabase.parseMysqlEnumeration(enumItem.column_type)
             if (enums[enumName] && !isEqual(enums[enumName], enumValues)) {
@@ -133,7 +133,7 @@ export class MysqlDatabase implements Database {
             'WHERE table_name = ? and table_schema = ?',
             [tableName, tableSchema]
         )
-        tableColumns.map((schemaItem: { column_name: string, data_type: string, is_nullable: string }) => {
+        tableColumns.map((schemaItem: any) => {
             const columnName = schemaItem.column_name
             const dataType = schemaItem.data_type
             tableDefinition[columnName] = {
@@ -158,17 +158,19 @@ export class MysqlDatabase implements Database {
             'GROUP BY table_name',
             [schemaName]
         )
-        return schemaTables.map((schemaItem: { table_name: string }) => schemaItem.table_name)
+        return schemaTables.map((schemaItem: any) => schemaItem.table_name)
     }
 
     public queryAsync (queryString: string, escapedValues?: Array<string>): Promise<Object[]> {
         return new Promise((resolve, reject) => {
-            this.db.query(queryString, escapedValues, (error: Error, results: Array<Object>) => {
-                if (error) {
-                    return reject(error)
+            this.db.query(queryString, escapedValues,
+                (error: mysql.MysqlError | null, results: Array<Object>) => {
+                    if (error) {
+                        return reject(error)
+                    }
+                    return resolve(results)
                 }
-                return resolve(results)
-            })
+            )
         })
     }
 

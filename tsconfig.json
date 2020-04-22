@@ -1,19 +1,24 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "lib": ["es2015"],
-        "noImplicitAny": true,
-        "declaration": true,
-        "strictNullChecks": true,
-        "newLine": "LF",
-        "sourceMap": true
-    },
-    "exclude": [
-        "node_modules",
-        "dts",
-        "test/actual",
-        "test/expected",
-        "test/fixture"
-    ]
+  "compilerOptions": {
+      "target": "es2019",
+      "lib": [ "es2019" ],
+      "inlineSourceMap": true,
+      "allowJs": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "esModuleInterop": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "jsx": "preserve",
+      "noImplicitReturns": true,
+      "strict": true,
+      "noUnusedLocals": true
+  },
+  "exclude": [
+      "node_modules"
+  ],
+  "include": [
+      "**/*.ts"
+  ]
 }

@@ -21,7 +21,7 @@ function getTime () {
     return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`
 }
 
-function buildHeader (db: Database, tables: string[], schema: string|null, options: OptionValues): string {
+function buildHeader (db: Database, tables: string[], schema: string | null, options: OptionValues): string {
     let commands = ['schemats', 'generate', '-c', db.connectionString.replace(/:\/\/.*@/,'://username:password@')]
     if (options.camelCase) commands.push('-C')
     if (tables.length > 0) {
@@ -45,7 +45,7 @@ function buildHeader (db: Database, tables: string[], schema: string|null, optio
     `
 }
 
-export async function typescriptOfTable (db: Database|string, 
+export async function typescriptOfTable (db: Database | string, 
                                          table: string,
                                          schema: string,
                                          options = new Options()) {
@@ -60,9 +60,9 @@ export async function typescriptOfTable (db: Database|string,
     return interfaces
 }
 
-export async function typescriptOfSchema (db: Database|string,
+export async function typescriptOfSchema (db: Database | string,
                                           tables: string[] = [],
-                                          schema: string|null = null,
+                                          schema: string | null = null,
                                           options: OptionValues = {}): Promise<string> {
     if (typeof db === 'string') {
         db = getDatabase(db)
@@ -108,5 +108,5 @@ export async function typescriptOfSchema (db: Database|string,
     return processedResult.dest
 }
 
-export {Database, getDatabase} from './schema'
-export {Options, OptionValues}
+export { Database, getDatabase } from './schema'
+export { Options, OptionValues }

@@ -6,8 +6,7 @@
 
 import * as yargs from 'yargs'
 import * as fs from 'fs'
-import { typescriptOfSchema, getDatabase } from '../src/index'
-import Options from '../src/options'
+import { typescriptOfSchema } from '../src/index'
 
 interface SchematsConfig {
     conn: string,
@@ -18,7 +17,7 @@ interface SchematsConfig {
     noHeader: boolean,
 }
 
-let argv: SchematsConfig = yargs
+let argv = yargs
     .usage('Usage: $0 <command> [options]')
     .global('config')
     .default('config', 'schemats.json')
@@ -47,7 +46,7 @@ let argv: SchematsConfig = yargs
     .describe('o', 'output file name')
     .help('h')
     .alias('h', 'help')
-    .argv;
+    .argv as unknown as SchematsConfig;
 
 (async () => {
 
